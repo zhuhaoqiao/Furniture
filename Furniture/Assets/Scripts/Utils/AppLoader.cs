@@ -8,7 +8,7 @@ public class AppLoader : MonoBehaviour {
     [SerializeField] UICtrl mUICtrl;
     private void Awake()
     {
-        Log.I("Init[{0}]");
+        Log.I("Init[{0}]", AppMgr.Instance.GetType().Name);
     }
 
     private void Start()
