@@ -153,7 +153,9 @@ public class DoorPool : MonoBehaviour {
 
     }
 
-    public class DoorInfo()
+    public class DoorInfo
     {
+        int id;
+        string name;
     }
 }

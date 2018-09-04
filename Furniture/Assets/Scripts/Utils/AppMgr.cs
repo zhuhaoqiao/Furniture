@@ -19,6 +19,9 @@ public class AppMgr : MonoBehaviour,ISingleton {
 
     void Start()
     {
-        gameObject.AddComponent<StartProcessModule>();
+        ResMgr.Init();
+
+        //添加启动模块
+        //gameObject.AddComponent<StartProcessModule>();
     }
 }

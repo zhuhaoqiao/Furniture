@@ -33,13 +33,13 @@ namespace QFramework.Example
             //场景切换按钮事件
             DoorSwitchBtn.onClick.AddListener(() =>
             {
-
+               
             });
 
             //时空切换按钮事件
             TimeAndSpaceSwitchBtn.onClick.AddListener(() =>
             {
-
+                
             });
 
             //一键摆放按钮事件
@@ -51,7 +51,8 @@ namespace QFramework.Example
             //返回按钮事件
             ReturnBtn.onClick.AddListener(() =>
             {
-
+                UIMgr.OpenPanel<UIMainMenu>();
+                CloseSelf();
             });
         }
 
