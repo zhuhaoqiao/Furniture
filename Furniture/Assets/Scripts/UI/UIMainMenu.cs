@@ -33,7 +33,7 @@ namespace QFramework.Example
             //进入场景按钮事件
             ToDoorBtn.onClick.AddListener(() =>
             {
-                UIMgr.OpenPanel<UIDoor>();
+                UIMgr.OpenPanel<UIInDoor>();
                 CloseSelf();
             });
 
@@ -42,6 +42,11 @@ namespace QFramework.Example
             {
                 UIMgr.OpenPanel<UIFurnitureLib>();
                 CloseSelf();
+            });
+
+            ExitBtn.onClick.AddListener(() =>
+            {
+                Application.Quit();
             });
         }
 

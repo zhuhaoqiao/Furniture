@@ -13,11 +13,13 @@ namespace QFramework.Example
 
 		[SerializeField] public Button ToDoorBtn;
 		[SerializeField] public Button ToLibrBtn;
+		[SerializeField] public Button ExitBtn;
 
 		protected override void ClearUIComponents()
 		{
 			ToDoorBtn = null;
 			ToLibrBtn = null;
+			ExitBtn = null;
 		}
 
 		private UIMainMenuData mPrivateData = null;
