@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using QFramework;
 using QAssetBundle;
+using QFramework.Example;
 
 public class InDoorPool
 {
@@ -149,8 +150,3 @@ public class InDoorType
 
 }
 
-public class InDoorInfo
-{
-    public int id;
-    public string name;
-}

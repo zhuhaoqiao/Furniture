@@ -9944,6 +9944,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4044721939395840}
+  - component: {fileID: 114537225233605052}
+  - component: {fileID: 114658056581710782}
   m_Layer: 0
   m_Name: InDoorOne
   m_TagString: Untagged
@@ -75073,6 +75075,28 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114537225233605052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1514524740247064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b8ca7d7a0b3b7a4d8c098c581775bb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114658056581710782
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1514524740247064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1219c6f503de7b645a1a94beb8a685f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!124 &124703601984720660
 Behaviour:
   m_ObjectHideFlags: 1

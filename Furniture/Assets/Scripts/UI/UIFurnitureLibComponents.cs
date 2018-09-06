@@ -13,11 +13,13 @@ namespace QFramework.Example
 
 		[SerializeField] public Image LibDrd;
 		[SerializeField] public Button ReturnBtn;
+		[SerializeField] public ScrollRect ConfigScrollView;
 
 		protected override void ClearUIComponents()
 		{
 			LibDrd = null;
 			ReturnBtn = null;
+			ConfigScrollView = null;
 		}
 
 		private UIFurnitureLibData mPrivateData = null;

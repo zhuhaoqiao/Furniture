@@ -9,8 +9,12 @@ namespace QFramework.Example
     {
         private LoadingCanvas mLoadingCanvas;
 
-        private List<InDoorInfo> mInDoorList = new List<InDoorInfo>();
-        private InDoorSceneCtrl mInDoorSceneCtrl;
+        private List<InDoorInfo> mInDoorList = new List<InDoorInfo>(new InDoorInfo[]
+            {
+                new InDoorInfo(){id = 0,name = "InDoorOne"},
+                new InDoorInfo(){id = 1,name = "InDoorOne"},
+                new InDoorInfo(){id = 2,name = "InDoorOne"}
+            });
         // Use this for initialization
         void Start()
         {
@@ -18,13 +22,7 @@ namespace QFramework.Example
 
             OpenUIMain();
 
-            InDoorInfo inDoorInfoTemp = new InDoorInfo()
-            { id = 0, name = "InDoorOne" };
-
-            mInDoorList.Add(inDoorInfoTemp);
-
-            mInDoorSceneCtrl = InDoorSceneCtrl.Load();
-            mInDoorSceneCtrl.LoadScenes(mInDoorList, 0);
+            InDoorSceneCtrl.Instance.LoadScenes(mInDoorList, 0);
         }
 
         private void OpenUIMain()

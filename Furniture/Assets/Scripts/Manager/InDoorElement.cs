@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using QFramework;
+using QFramework.Example;
 
 public class InDoorElement : MonoBehaviour {
 
@@ -27,6 +28,7 @@ public class InDoorElement : MonoBehaviour {
 
     public void CustomHide()
     {
+        this.gameObject.Hide();
         InDoorPool.Instance.RecycleScene(this);
     }
 }

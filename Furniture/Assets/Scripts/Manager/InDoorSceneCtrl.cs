@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using QAssetBundle;
+using QFramework.Example;
 
-public class InDoorSceneCtrl : MonoBehaviour {
+public class InDoorSceneCtrl : MonoSingleton<InDoorSceneCtrl> {
 
     #region Private Variables
 
@@ -13,7 +14,7 @@ public class InDoorSceneCtrl : MonoBehaviour {
     private bool mLoadingFinish = false;
     private float mDuration = 0.5f;
 
-    private List<InDoorInfo> mOrderedInDoorInfos;
+    private List<InDoorInfo> mOrderedInDoorInfos = new List<InDoorInfo>();
 
     private InDoorElement mCurElement;
     private InDoorElement mBeforeElement;
@@ -36,23 +37,30 @@ public class InDoorSceneCtrl : MonoBehaviour {
         get { return mEnableSwipe; }
     }
 
+    public int OrderedInDoorNum
+    {
+        get { return mOrderedInDoorInfos.Count; }
+    }
+
     #endregion
 
     /// <summary>
     /// 加载场景包括资源
     /// </summary>
     /// <returns></returns>
-    public static InDoorSceneCtrl Load()
+
+    public override void OnSingletonInit()
     {
         ResLoader resLoader = ResLoader.Allocate();
-        var prefab = resLoader.LoadSync<GameObject>(Indoorsceneprefab.BundleName, Indoorsceneprefab.INDOORSCENE);
-        var inDoorSceneCtrl = Instantiate(prefab).AddComponent<InDoorSceneCtrl>();
+ 
+        var inDoorSceneCtrl = gameObject.GetComponent<InDoorSceneCtrl>();
         inDoorSceneCtrl.ResLoader = resLoader;
         inDoorSceneCtrl.Init();
-        return inDoorSceneCtrl;
+
+        Debug.Log(name + ":" + "OnSingletonInit");
     }
 
-    public void Init()
+    private void Init()
     {
         transform.LocalIdentity();
         gameObject.SetActive(true);
@@ -105,11 +113,13 @@ public class InDoorSceneCtrl : MonoBehaviour {
     {
         mEnableSwipe = false;
         mBeforeElement = mCurElement;
-
+        
         mCurElement = InDoorPool.Instance.GetSceneWithInDoor(mOrderedInDoorInfos[index]);
         mCurElement.GetComponent<OnShowCtrl>().OnShowRight(mDuration);
 
         mBeforeElement.GetComponent<OnHideCtrl>().OnHideRight(mDuration);
+
+        Debug.Log(mBeforeElement.ElementInDoorInfo.id + "---------------" + mCurElement.ElementInDoorInfo.id);
     }
 
     public void MovePrevious(int index)
@@ -128,9 +138,8 @@ public class InDoorSceneCtrl : MonoBehaviour {
         
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        UnLoad();
-        InDoorPool.Instance.Destroy();
+       
     }
 }
