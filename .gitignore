@@ -22,3 +22,7 @@ obj/
 *.unityproj
 *.booproj
 *.meta
+Furniture/.vs/Furniture/v15/Server/sqlite3/db.lock
+Furniture/.vs/Furniture/v15/Server/sqlite3/storage.ide
+Furniture/.vs/Furniture/v15/Server/sqlite3/storage.ide-shm
+Furniture/.vs/Furniture/v15/Server/sqlite3/storage.ide-wal
