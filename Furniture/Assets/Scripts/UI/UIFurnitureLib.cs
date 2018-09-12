@@ -73,8 +73,7 @@ namespace QFramework.Example
         {
             base.OnShow();
 
-            transform.SetParent(GameObject.Find("CenterEyeAnchor").transform);
-            transform.localPosition = new Vector3(0f, 0f, 30f);
+            QUIManager.Instance.transform.SetParent(GameObject.Find("LeftHandAnchor").transform);
         }
 
         protected override void OnHide()
