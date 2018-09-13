@@ -21,7 +21,7 @@ public class InDoorElement : MonoBehaviour {
     }
     public void CustomShow()
     {
-        this.transform.localPosition = Vector3.zero;
+       // this.transform.localPosition = Vector3.zero;
         this.gameObject.Show();
         InDoorPool.Instance.RecycleInDoorScene(this);
     }
