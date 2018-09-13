@@ -19,29 +19,30 @@ namespace QFramework.Example
 
     public partial class UIFurnitureLib : UIPanel
     {
-        private Dropdown mLibDrd;
-
-        private List<string> mDropDownNamesList = new List<string>();
+        private List<BtnTemp> mTypeNamesList = new List<BtnTemp>();
 
         private Dictionary<string, LibOptionInfo> mLibOpDict = new Dictionary<string, LibOptionInfo>();
+        private List<GameObject> mBtnShowBoxList = new List<GameObject>();
 
         private GameObject mConfigBtn_Pre;
         private GameObject mConfigGrid_Pre;
+        private GameObject mTypeBtn_Pre;
 
-        private int mCurrentDropValue;
+        private int mCurrentTypeSelect = 0;
+
+        private int mBeforeFurSelect = 0;
+        private int mCurrentFurSelect = 0;
 
         protected override void InitUI(IUIData uiData = null)
         {
-            mLibDrd = LibDrd.GetComponent<Dropdown>();
-
             mConfigBtn_Pre = transform.Find("ConfigBtn_Pre").gameObject;
             mConfigGrid_Pre = transform.Find("ConfigGrid_Pre").gameObject;
+            mTypeBtn_Pre = transform.Find("TypeBtn_Pre").gameObject;
 
             mData = uiData as UIFurnitureLibData ?? new UIFurnitureLibData();
 
-            mCurrentDropValue = mLibDrd.value;
+            mCurrentTypeSelect = 0;
 
-            mLibDrd.options.Clear();
             InitOpInfos();
         }
 
@@ -58,15 +59,6 @@ namespace QFramework.Example
                 UIMgr.OpenPanel<UIMainMenu>();
                 CloseSelf();
             });
-
-            mLibDrd = LibDrd.GetComponent<Dropdown>();
-            EventTrigger trigger = mLibDrd.gameObject.AddComponent<EventTrigger>();
-            UnityAction<BaseEventData> action = new UnityAction<BaseEventData>(OnSelectDelegate);
-            EventTrigger.Entry entry = new EventTrigger.Entry();
-
-            entry.eventID = EventTriggerType.Select;
-            entry.callback.AddListener(action);
-            trigger.triggers.Add(entry);
         }
 
         protected override void OnShow()
@@ -93,97 +85,39 @@ namespace QFramework.Example
 
         void InitOpInfos()
         {
-            Dropdown.OptionData tempOpData;
-
-            List<BtnTemp> btnTemps = new List<BtnTemp>(new BtnTemp[]
-                {
-                    new BtnTemp(){Name = "jiaoji_1",Bg = null},
-                    new BtnTemp(){Name = "jiaoji_2",Bg = null},
-                }
-            );
-
-            List<BtnTemp> btnMatTemps = new List<BtnTemp>(new BtnTemp[]
-                {
-                    new BtnTemp(){Name = "111",Bg = null},
-                    new BtnTemp(){Name = "222",Bg = null},
-                }
-            );
-
-            AddFurniturelStyle("承具", new List<FurnitureSet>(new FurnitureSet[]
-                {
-                    new FurnitureSet(){ TyepName = "材质",ChildBtnsList = btnMatTemps},
-                    new FurnitureSet(){ TyepName = "产品",ChildBtnsList = btnTemps}
-                }),new List<string>() { "jiaoji_1" }
-           );
-
-            AddFurniturelStyle("庋具", new List<FurnitureSet>(new FurnitureSet[]
-                {
-                    new FurnitureSet(){ TyepName = "材质",ChildBtnsList = btnMatTemps},
-                    new FurnitureSet(){ TyepName = "产品",ChildBtnsList = btnTemps}
-                }), new List<string>() { "jiaoji_1" }
-            );
-
-            AddFurniturelStyle("椅子", new List<FurnitureSet>(new FurnitureSet[]
-                {
-                    new FurnitureSet(){ TyepName = "材质",ChildBtnsList = btnMatTemps},
-                    new FurnitureSet(){ TyepName = "产品",ChildBtnsList = btnTemps}
-                }), new List<string>() { "jiaoji_1" }
-            );
-
-            AddFurniturelStyle("沙发", new List<FurnitureSet>(new FurnitureSet[]
-                {
-                    new FurnitureSet(){ TyepName = "材质",ChildBtnsList = btnMatTemps},
-                    new FurnitureSet(){ TyepName = "产品",ChildBtnsList = btnTemps}
-               }), new List<string>() { "jiaoji_1" }
-            );
+            InitInfos();
 
             foreach (KeyValuePair<string, LibOptionInfo> kvp in mLibOpDict)
             {
-                tempOpData = new Dropdown.OptionData();
+                BtnTemp mBtnTemp = new BtnTemp();
 
-                tempOpData.text = kvp.Key;                 
-                tempOpData.image = kvp.Value.BgSprite;
+                mBtnTemp.Name = kvp.Key;
+                mBtnTemp.Bg = kvp.Value.BgSprite;
 
-                mDropDownNamesList.Add(kvp.Key);
-
-                mLibDrd.options.Add(tempOpData);
+                mTypeNamesList.Add(mBtnTemp);
             }
 
-            mLibDrd.captionText.text = mDropDownNamesList[0];
+            InitTypeBtns();
+            InitScrollView(mLibOpDict[mTypeNamesList[0].Name]);
 
-            InitScrollView(mLibOpDict[mDropDownNamesList[mLibDrd.value]]);
-
-            FurnitureLibCtrl.Instance.LoadFurniture(mLibOpDict[mDropDownNamesList[mLibDrd.value]].TypeNmae,
-                mLibOpDict[mDropDownNamesList[mLibDrd.value]].FurnitureTempList[0]);
+            FurnitureLibCtrl.Instance.LoadFurniture(mLibOpDict[mTypeNamesList[mCurrentTypeSelect].Name].Type, 
+                mLibOpDict[mTypeNamesList[mCurrentTypeSelect].Name].FurnitureSetList[0].ChildBtnsList[0].AssetName);
         }
 
         void JumpToSelectLib(int mLibID)
         {
             ConfigScrollView.gameObject.Show();
 
-            Debug.Log(mDropDownNamesList[mLibID]);
+            Debug.Log(mTypeNamesList[mLibID]);
         }
 
-        public void OnSelectDelegate(BaseEventData data)
-        {
-            if (mLibDrd.value != mCurrentDropValue)
-            {
-                InitScrollView(mLibOpDict[mDropDownNamesList[mLibDrd.value]]);
-                JumpToSelectLib(mLibDrd.value);
-                mCurrentDropValue = mLibDrd.value;
-
-                FurnitureLibCtrl.Instance.LoadFurniture(mLibOpDict[mDropDownNamesList[mLibDrd.value]].TypeNmae,
-                    mLibOpDict[mDropDownNamesList[mLibDrd.value]].FurnitureTempList[0]);
-            }
-        }
-
-        private void AddFurniturelStyle(string typeName, List<FurnitureSet> furnitureSets,List<string> furnitures, Sprite typeBg = null)
+        private void AddFurniturelStyle(string typeName,string type ,List<FurnitureSet> furnitureSets, Sprite typeBg = null)
         {
             LibOptionInfo mLibOptionInfo = new LibOptionInfo();
-            mLibOptionInfo.TypeNmae = typeName;
+            mLibOptionInfo.TypeName = typeName;
+            mLibOptionInfo.Type = type;
             mLibOptionInfo.BgSprite = typeBg;
             mLibOptionInfo.FurnitureSetList = furnitureSets;
-            mLibOptionInfo.FurnitureTempList = furnitures;
 
             if (mLibOpDict.ContainsKey(typeName))
             {
@@ -195,8 +129,42 @@ namespace QFramework.Example
             }
         }
 
+        private void InitTypeBtns()
+        {
+            for (int i = 0; i < mTypeNamesList.Count; i++)
+            {
+                var TypeBtn_PreObj = Instantiate(mTypeBtn_Pre);
+
+                TypeBtn_PreObj.SetActive(true);
+
+                TypeBtn_PreObj.transform.SetParent(LibBtns.transform);
+                TypeBtn_PreObj.transform.localPosition = Vector3.zero;
+                TypeBtn_PreObj.transform.localScale = Vector3.one;
+                TypeBtn_PreObj.GetComponent<Image>().sprite = mTypeNamesList[i].Bg;
+                TypeBtn_PreObj.transform.Find("Text").GetComponent<Text>().text = mTypeNamesList[i].Name;
+
+                string showTypeTemp = mTypeNamesList[i].Name;
+                int selectId = i;
+
+                TypeBtn_PreObj.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    if (selectId != mCurrentTypeSelect)
+                    {                      
+                        mCurrentTypeSelect = selectId;
+                        JumpToSelectLib(mCurrentTypeSelect);
+                        InitScrollView(mLibOpDict[mTypeNamesList[i].Name]);
+
+                        FurnitureLibCtrl.Instance.LoadFurniture(mLibOpDict[mTypeNamesList[mCurrentTypeSelect].Name].Type,
+                            mLibOpDict[mTypeNamesList[mCurrentTypeSelect].Name].FurnitureSetList[0].ChildBtnsList[0].AssetName);
+                    }
+                });
+            }
+        }
+
         private void InitScrollView(LibOptionInfo initLibOptionInfo)
         {
+            mBtnShowBoxList.Clear();
+
             int childCount = ConfigScrollView.content.childCount;
             
             for (int i = 0; i < childCount; i++)
@@ -206,16 +174,20 @@ namespace QFramework.Example
 
             for (int i = 0; i < initLibOptionInfo.FurnitureSetList.Count; i++)
             {
-                var configGrid_PreObj = Instantiate(mConfigGrid_Pre);
-                configGrid_PreObj.SetActive(true);
-
-                configGrid_PreObj.transform.SetParent(ConfigScrollView.content);
-                configGrid_PreObj.transform.localPosition = Vector3.zero;
-                configGrid_PreObj.transform.localScale = Vector3.one;
-                configGrid_PreObj.transform.Find("ConfigName").GetComponent<Text>().text = initLibOptionInfo.FurnitureSetList[i].TyepName;
+                GameObject configGrid_PreObj = null;
 
                 for (int j = 0; j < initLibOptionInfo.FurnitureSetList[i].ChildBtnsList.Count; j++)
                 {
+                    if (j % 6 == 0)
+                    {
+                        configGrid_PreObj = Instantiate(mConfigGrid_Pre);
+                        configGrid_PreObj.SetActive(true);
+
+                        configGrid_PreObj.transform.SetParent(ConfigScrollView.content);
+                        configGrid_PreObj.transform.localPosition = Vector3.zero;
+                        configGrid_PreObj.transform.localScale = Vector3.one;
+                    }
+
                     var ConfigBtn_PreObj = Instantiate(mConfigBtn_Pre);
 
                     ConfigBtn_PreObj.SetActive(true);
@@ -224,27 +196,106 @@ namespace QFramework.Example
                     ConfigBtn_PreObj.transform.localPosition = Vector3.zero;
                     ConfigBtn_PreObj.transform.localScale = Vector3.one;
                     ConfigBtn_PreObj.transform.Find("BtnName").GetComponent<Text>().text = initLibOptionInfo.FurnitureSetList[i].ChildBtnsList[j].Name;
+                    ConfigBtn_PreObj.GetComponent<Image>().sprite = initLibOptionInfo.FurnitureSetList[i].ChildBtnsList[j].Bg;
+
+                    mBtnShowBoxList.Add(ConfigBtn_PreObj.transform.Find("SelectBox").gameObject);
 
                     string setTemp = initLibOptionInfo.FurnitureSetList[i].TyepName;
-                    string btnSetTemp = initLibOptionInfo.FurnitureSetList[i].ChildBtnsList[j].Name;
+                    string furnitureNameTemp = initLibOptionInfo.FurnitureSetList[i].ChildBtnsList[j].AssetName;
+                    int btnId = j;
 
                     ConfigBtn_PreObj.GetComponent<Button>().onClick.AddListener(() =>
                     {
-                        if (setTemp == "材质")
-                        {
-                            FurnitureLibCtrl.Instance.ChangeMat(btnSetTemp);
-                        }
-                        else if (setTemp == "产品")
-                        {
-                            FurnitureLibCtrl.Instance.LoadFurniture(initLibOptionInfo.TypeNmae, btnSetTemp);
-                        }
+                        mBeforeFurSelect = mCurrentFurSelect;
+                        mCurrentFurSelect = btnId;
+                        ShowSelectBox(mCurrentFurSelect);
+                        FurnitureLibCtrl.Instance.LoadFurniture(initLibOptionInfo.Type, furnitureNameTemp);
                     });
                 }
             }
 
             ConfigScrollView.gameObject.Show();
+            ShowSelectBox(0);
         }
-        
+
+        private void ShowSelectBox(int showId)
+        {
+            mBtnShowBoxList[mBeforeFurSelect].Hide();
+            mBtnShowBoxList[showId].Show();      
+        }
+
+        private void InitInfos()
+        {
+            List<BtnTemp> chengjuBtnTemps = new List<BtnTemp>(new BtnTemp[]
+               {
+                    new BtnTemp(){Name = "餐桌_1",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("chengjusprite" ,"chengju_canzhuo_N2D001"),AssetName = "chengju_canzhuo_N2D001"},
+                    new BtnTemp(){Name = "餐桌_2",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("chengjusprite" ,"chengju_canzhuo_N2D002"),AssetName = "chengju_canzhuo_N2D002"},
+                    new BtnTemp(){Name = "餐桌_3",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("chengjusprite" ,"chengju_canzhuo_N2D003"),AssetName = "chengju_canzhuo_N2D003"},
+                    new BtnTemp(){Name = "茶几_1",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("chengjusprite" ,"chengju_chaji_N2CT001"),AssetName = "chengju_chaji_N2CT001"},
+                    new BtnTemp(){Name = "茶几_2",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("chengjusprite" ,"chengju_chaji_N2CT002"),AssetName = "chengju_chaji_N2CT002"},
+                    new BtnTemp(){Name = "角几_1",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("chengjusprite" ,"chengju_jiaoji_001"),AssetName = "chengju_jiaoji_001"},
+                    new BtnTemp(){Name = "角几_2",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("chengjusprite" ,"chengju_jiaoji_002"),AssetName = "chengju_jiaoji_002"},
+                    new BtnTemp(){Name = "梳妆台",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("chengjusprite" ,"chengju_shuzhuangtai_N2T002"),AssetName = "chengju_shuzhuangtai_N2T002"},
+                    new BtnTemp(){Name = "书桌_1",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("chengjusprite" ,"chengju_shuzhuo_N2W001"),AssetName = "chengju_shuzhuo_N2W001"},
+                    new BtnTemp(){Name = "书桌_2",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("chengjusprite" ,"chengju_shuzhuo_N2W002"),AssetName = "chengju_shuzhuo_N2W002"},
+                    new BtnTemp(){Name = "书桌_3",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("chengjusprite" ,"chengju_shuzhuo_N2W003"),AssetName = "chengju_shuzhuo_N2W003"},
+               }
+           );
+
+            List<BtnTemp> guijuBtnTemps = new List<BtnTemp>(new BtnTemp[]
+               {
+                    new BtnTemp(){Name = "边柜_1",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_biangui_N4S001"),AssetName = "guiju_biangui_N4S001"},
+                    new BtnTemp(){Name = "边柜_2",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_biangui_N4S002"),AssetName = "guiju_biangui_N4S002"},
+                    new BtnTemp(){Name = "边柜_3",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_biangui_N4S003"),AssetName = "guiju_biangui_N4S003"},
+                    new BtnTemp(){Name = "边柜_4",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_biangui_N4S004"),AssetName = "guiju_biangui_N4S004"},
+                    new BtnTemp(){Name = "餐边柜",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_canbiangui_N4C001"),AssetName = "guiju_canbiangui_N4C001"},
+                    new BtnTemp(){Name = "陈列柜",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_chenliegui_N4E001"),AssetName = "guiju_chenliegui_N4E001"},
+                    new BtnTemp(){Name = "床头柜_1",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_chuantougui_N4N001"),AssetName = "guiju_chuantougui_N4N001"},
+                    new BtnTemp(){Name = "床头柜_2",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_chuantougui_N4N002"),AssetName = "guiju_chuantougui_N4N002"},
+                    new BtnTemp(){Name = "电视柜_1",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_dianshigui_N4TV001"),AssetName = "guiju_dianshigui_N4TV001"},
+                    new BtnTemp(){Name = "电视柜_2",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_dianshigui_N4TV002"),AssetName = "guiju_dianshigui_N4TV002"},
+                    new BtnTemp(){Name = "电视柜_3",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_dianshigui_N4TV003"),AssetName = "guiju_dianshigui_N4TV003"},
+                    new BtnTemp(){Name = "电视柜_4",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_dianshigui_N4TV004"),AssetName = "guiju_dianshigui_N4TV004"},
+                    new BtnTemp(){Name = "电视柜_5",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_dianshigui_N4TV005"),AssetName = "guiju_dianshigui_N4TV005"},
+                    new BtnTemp(){Name = "电视柜_6",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_dianshigui_N4TV006"),AssetName = "guiju_dianshigui_N4TV006"},
+                    new BtnTemp(){Name = "斗柜_1",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_dougui_N4F001"),AssetName = "guiju_dougui_N4F001"},
+                    new BtnTemp(){Name = "斗柜_2",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_dougui_N4F002"),AssetName = "guiju_dougui_N4F002"},
+                    new BtnTemp(){Name = "斗柜_3",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_dougui_N4F003"),AssetName = "guiju_dougui_N4F003"},
+                    new BtnTemp(){Name = "书柜",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_shugui_N4B001"),AssetName = "guiju_shugui_N4B001"},
+                    new BtnTemp(){Name = "衣架",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("guijusprite" ,"guiju_yijia_YIJIA"),AssetName = "guiju_yijia_YIJIA"},
+               }
+           );
+
+            List<BtnTemp> jiajuBtnTemps = new List<BtnTemp>(new BtnTemp[]
+               {
+                    new BtnTemp(){Name = "置物架",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("jiajusprite" ,"jiaju_zhiwujia"),AssetName = "jiaju_zhiwujia"},
+                }
+           );
+
+            List<BtnTemp> wojuBtnTemps = new List<BtnTemp>(new BtnTemp[]
+               {
+                    new BtnTemp(){Name = "床_1",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("wojusprite" ,"woju_chuan_N3B001"),AssetName = "woju_chuan_N3B001"},
+                    new BtnTemp(){Name = "床_2",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("wojusprite" ,"woju_chuan_N3B002"),AssetName = "woju_chuan_N3B002"},
+                }
+           );
+
+            List<BtnTemp> zuojuBtnTemps = new List<BtnTemp>(new BtnTemp[]
+               {
+                    new BtnTemp(){Name = "餐椅_1",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("zuojusprite" ,"zuoju_canyi_N1H001"),AssetName = "zuoju_canyi_N1H001"},
+                    new BtnTemp(){Name = "餐椅_2",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("zuojusprite" ,"zuoju_canyi_N1H002"),AssetName = "zuoju_canyi_N1H002"},
+                    new BtnTemp(){Name = "餐椅_3",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("zuojusprite" ,"zuoju_canyi_N1H003"),AssetName = "zuoju_canyi_N1H003"},
+                    new BtnTemp(){Name = "凳子",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("zuojusprite" ,"zuoju_dengzi"),AssetName = "zuoju_dengzi"},
+                    new BtnTemp(){Name = "旋转椅",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("zuojusprite" ,"zuoju_xuanzhaunmudeng"),AssetName = "zuoju_xuanzhaunmudeng"},
+                    new BtnTemp(){Name = "椅子",Bg =  FurnitureLibCtrl.Instance.LoadBgByName("zuojusprite" ,"zuoju_yizi"),AssetName = "zuoju_yizi"},
+                }
+           );
+
+            AddFurniturelStyle("承具", "chengju", new List<FurnitureSet>(new FurnitureSet[]{ new FurnitureSet(){ TyepName = "产品",ChildBtnsList = chengjuBtnTemps}}));
+            AddFurniturelStyle("庋具", "guiju", new List<FurnitureSet>(new FurnitureSet[] { new FurnitureSet() { TyepName = "产品", ChildBtnsList = guijuBtnTemps } }));
+            AddFurniturelStyle("家具", "jiaju", new List<FurnitureSet>(new FurnitureSet[] { new FurnitureSet() { TyepName = "产品", ChildBtnsList = jiajuBtnTemps } }));
+            AddFurniturelStyle("卧具", "woju", new List<FurnitureSet>(new FurnitureSet[] { new FurnitureSet() { TyepName = "产品", ChildBtnsList = wojuBtnTemps } }));
+            AddFurniturelStyle("坐具", "zuoju", new List<FurnitureSet>(new FurnitureSet[] { new FurnitureSet() { TyepName = "产品", ChildBtnsList = zuojuBtnTemps } }));
+        }
     }
 
 }

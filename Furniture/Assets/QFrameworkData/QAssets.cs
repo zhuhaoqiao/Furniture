@@ -16,10 +16,90 @@ namespace QAssetBundle
         public const string BundleName = "ASSETOBJ_PREFAB";
         public const string ASSETOBJ = "ASSETOBJ";
     }
-    public class Furniturepre
+    public class Bgsprite
     {
-        public const string BundleName = "FURNITUREPRE";
-        public const string JIAOJI_1 = "JIAOJI_1";
+        public const string BundleName = "BGSPRITE";
+        public const string BACKGROUND = "BACKGROUND";
+        public const string ZHIJIAO = "ZHIJIAO";
+        public const string ZUIXIAO = "ZUIXIAO";
+    }
+    public class Chengjupre
+    {
+        public const string BundleName = "CHENGJUPRE";
+        public const string CHENGJU_CANZHUO_N2D001_PRE = "CHENGJU_CANZHUO_N2D001_PRE";
+        public const string CHENGJU_CANZHUO_N2D002_PRE = "CHENGJU_CANZHUO_N2D002_PRE";
+        public const string CHENGJU_CANZHUO_N2D003_PRE = "CHENGJU_CANZHUO_N2D003_PRE";
+        public const string CHENGJU_CHAJI_N2CT001_PRE = "CHENGJU_CHAJI_N2CT001_PRE";
+        public const string CHENGJU_CHAJI_N2CT002_PRE = "CHENGJU_CHAJI_N2CT002_PRE";
+        public const string CHENGJU_JIAOJI_001_PRE = "CHENGJU_JIAOJI_001_PRE";
+        public const string CHENGJU_JIAOJI_002_PRE = "CHENGJU_JIAOJI_002_PRE";
+        public const string CHENGJU_SHUZHUANGTAI_N2T002_PRE = "CHENGJU_SHUZHUANGTAI_N2T002_PRE";
+        public const string CHENGJU_SHUZHUO_N2W001_PRE = "CHENGJU_SHUZHUO_N2W001_PRE";
+        public const string CHENGJU_SHUZHUO_N2W002_PRE = "CHENGJU_SHUZHUO_N2W002_PRE";
+        public const string CHENGJU_SHUZHUO_N2W003_PRE = "CHENGJU_SHUZHUO_N2W003_PRE";
+    }
+    public class Chengjusprite
+    {
+        public const string BundleName = "CHENGJUSPRITE";
+        public const string CHENGJU_CANZHUO_N2D001 = "CHENGJU_CANZHUO_N2D001";
+        public const string CHENGJU_CANZHUO_N2D002 = "CHENGJU_CANZHUO_N2D002";
+        public const string CHENGJU_CANZHUO_N2D003 = "CHENGJU_CANZHUO_N2D003";
+        public const string CHENGJU_CHAJI_N2CT001 = "CHENGJU_CHAJI_N2CT001";
+        public const string CHENGJU_CHAJI_N2CT002 = "CHENGJU_CHAJI_N2CT002";
+        public const string CHENGJU_CHAJI_N2CT003 = "CHENGJU_CHAJI_N2CT003";
+        public const string CHENGJU_JIAOJI_001 = "CHENGJU_JIAOJI_001";
+        public const string CHENGJU_JIAOJI_002 = "CHENGJU_JIAOJI_002";
+        public const string CHENGJU_SHUZHUANGTAI_N2T001 = "CHENGJU_SHUZHUANGTAI_N2T001";
+        public const string CHENGJU_SHUZHUANGTAI_N2T002 = "CHENGJU_SHUZHUANGTAI_N2T002";
+        public const string CHENGJU_SHUZHUO_N2W001 = "CHENGJU_SHUZHUO_N2W001";
+        public const string CHENGJU_SHUZHUO_N2W002 = "CHENGJU_SHUZHUO_N2W002";
+        public const string CHENGJU_SHUZHUO_N2W003 = "CHENGJU_SHUZHUO_N2W003";
+    }
+    public class Guijupre
+    {
+        public const string BundleName = "GUIJUPRE";
+        public const string GUIJU_BIANGUI_N4S001_PRE = "GUIJU_BIANGUI_N4S001_PRE";
+        public const string GUIJU_BIANGUI_N4S002_PRE = "GUIJU_BIANGUI_N4S002_PRE";
+        public const string GUIJU_BIANGUI_N4S003_PRE = "GUIJU_BIANGUI_N4S003_PRE";
+        public const string GUIJU_BIANGUI_N4S004_PRE = "GUIJU_BIANGUI_N4S004_PRE";
+        public const string GUIJU_CANBIANGUI_N4C001_PRE = "GUIJU_CANBIANGUI_N4C001_PRE";
+        public const string GUIJU_CHENLIEGUI_N4E001_PRE = "GUIJU_CHENLIEGUI_N4E001_PRE";
+        public const string GUIJU_CHUANTOUGUI_N4N001_PRE = "GUIJU_CHUANTOUGUI_N4N001_PRE";
+        public const string GUIJU_CHUANTOUGUI_N4N002_PRE = "GUIJU_CHUANTOUGUI_N4N002_PRE";
+        public const string GUIJU_DIANSHIGUI_N4TV001_PRE = "GUIJU_DIANSHIGUI_N4TV001_PRE";
+        public const string GUIJU_DIANSHIGUI_N4TV002_PRE = "GUIJU_DIANSHIGUI_N4TV002_PRE";
+        public const string GUIJU_DIANSHIGUI_N4TV003_PRE = "GUIJU_DIANSHIGUI_N4TV003_PRE";
+        public const string GUIJU_DIANSHIGUI_N4TV004_PRE = "GUIJU_DIANSHIGUI_N4TV004_PRE";
+        public const string GUIJU_DIANSHIGUI_N4TV005_PRE = "GUIJU_DIANSHIGUI_N4TV005_PRE";
+        public const string GUIJU_DIANSHIGUI_N4TV006_PRE = "GUIJU_DIANSHIGUI_N4TV006_PRE";
+        public const string GUIJU_DOUGUI_N4F001_PRE = "GUIJU_DOUGUI_N4F001_PRE";
+        public const string GUIJU_DOUGUI_N4F002_PRE = "GUIJU_DOUGUI_N4F002_PRE";
+        public const string GUIJU_DOUGUI_N4F003_PRE = "GUIJU_DOUGUI_N4F003_PRE";
+        public const string GUIJU_SHUGUI_N4B001_PRE = "GUIJU_SHUGUI_N4B001_PRE";
+        public const string GUIJU_YIJIA_YIJIA_PRE = "GUIJU_YIJIA_YIJIA_PRE";
+    }
+    public class Guijusprite
+    {
+        public const string BundleName = "GUIJUSPRITE";
+        public const string GUIJU_BIANGUI_N4S001 = "GUIJU_BIANGUI_N4S001";
+        public const string GUIJU_BIANGUI_N4S002 = "GUIJU_BIANGUI_N4S002";
+        public const string GUIJU_BIANGUI_N4S003 = "GUIJU_BIANGUI_N4S003";
+        public const string GUIJU_BIANGUI_N4S004 = "GUIJU_BIANGUI_N4S004";
+        public const string GUIJU_CANBIANGUI_N4C001 = "GUIJU_CANBIANGUI_N4C001";
+        public const string GUIJU_CHENLIEGUI_N4E001 = "GUIJU_CHENLIEGUI_N4E001";
+        public const string GUIJU_CHUANTOUGUI_N4N001 = "GUIJU_CHUANTOUGUI_N4N001";
+        public const string GUIJU_CHUANTOUGUI_N4N002 = "GUIJU_CHUANTOUGUI_N4N002";
+        public const string GUIJU_DIANSHIGUI_N4TV001 = "GUIJU_DIANSHIGUI_N4TV001";
+        public const string GUIJU_DIANSHIGUI_N4TV002 = "GUIJU_DIANSHIGUI_N4TV002";
+        public const string GUIJU_DIANSHIGUI_N4TV003 = "GUIJU_DIANSHIGUI_N4TV003";
+        public const string GUIJU_DIANSHIGUI_N4TV004 = "GUIJU_DIANSHIGUI_N4TV004";
+        public const string GUIJU_DIANSHIGUI_N4TV005 = "GUIJU_DIANSHIGUI_N4TV005";
+        public const string GUIJU_DIANSHIGUI_N4TV006 = "GUIJU_DIANSHIGUI_N4TV006";
+        public const string GUIJU_DOUGUI_N4F001 = "GUIJU_DOUGUI_N4F001";
+        public const string GUIJU_DOUGUI_N4F002 = "GUIJU_DOUGUI_N4F002";
+        public const string GUIJU_DOUGUI_N4F003 = "GUIJU_DOUGUI_N4F003";
+        public const string GUIJU_SHUGUI_N4B001 = "GUIJU_SHUGUI_N4B001";
+        public const string GUIJU_YIJIA_YIJIA = "GUIJU_YIJIA_YIJIA";
     }
     public class Indoorsceneprefab
     {
@@ -27,6 +107,16 @@ namespace QAssetBundle
         public const string BEDROOM = "BEDROOM";
         public const string INDOORSCENE = "INDOORSCENE";
         public const string SITTINGROOM = "SITTINGROOM";
+    }
+    public class Jiajupre
+    {
+        public const string BundleName = "JIAJUPRE";
+        public const string JIAJU_ZHIWUJIA_PRE = "JIAJU_ZHIWUJIA_PRE";
+    }
+    public class Jiajusprite
+    {
+        public const string BundleName = "JIAJUSPRITE";
+        public const string JIAJU_ZHIWUJIA = "JIAJU_ZHIWUJIA";
     }
     public class Uiconnect_prefab
     {
@@ -62,5 +152,37 @@ namespace QAssetBundle
     {
         public const string BundleName = "UITESTUNIRX_PREFAB";
         public const string UITESTUNIRX = "UITESTUNIRX";
+    }
+    public class Wojupre
+    {
+        public const string BundleName = "WOJUPRE";
+        public const string WOJU_CHUAN_N3B001_PRE = "WOJU_CHUAN_N3B001_PRE";
+        public const string WOJU_CHUAN_N3B002_PRE = "WOJU_CHUAN_N3B002_PRE";
+    }
+    public class Wojusprite
+    {
+        public const string BundleName = "WOJUSPRITE";
+        public const string WOJU_CHUAN_N3B001 = "WOJU_CHUAN_N3B001";
+        public const string WOJU_CHUAN_N3B002 = "WOJU_CHUAN_N3B002";
+    }
+    public class Zuojupre
+    {
+        public const string BundleName = "ZUOJUPRE";
+        public const string ZUOJU_CANYI_N1H001_PRE = "ZUOJU_CANYI_N1H001_PRE";
+        public const string ZUOJU_CANYI_N1H002_PRE = "ZUOJU_CANYI_N1H002_PRE";
+        public const string ZUOJU_CANYI_N1H003_PRE = "ZUOJU_CANYI_N1H003_PRE";
+        public const string ZUOJU_DENGZI_PRE = "ZUOJU_DENGZI_PRE";
+        public const string ZUOJU_XUANZHAUNMUDENG_PRE = "ZUOJU_XUANZHAUNMUDENG_PRE";
+        public const string ZUOJU_YIZI_PRE = "ZUOJU_YIZI_PRE";
+    }
+    public class Zuojusprite
+    {
+        public const string BundleName = "ZUOJUSPRITE";
+        public const string ZUOJU_CANYI_N1H001 = "ZUOJU_CANYI_N1H001";
+        public const string ZUOJU_CANYI_N1H002 = "ZUOJU_CANYI_N1H002";
+        public const string ZUOJU_CANYI_N1H003 = "ZUOJU_CANYI_N1H003";
+        public const string ZUOJU_DENGZI = "ZUOJU_DENGZI";
+        public const string ZUOJU_XUANZHAUNMUDENG = "ZUOJU_XUANZHAUNMUDENG";
+        public const string ZUOJU_YIZI = "ZUOJU_YIZI";
     }
 }

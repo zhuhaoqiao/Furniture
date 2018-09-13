@@ -7,12 +7,11 @@ namespace QFramework.Example
     //产品库选项的信息
     public class LibOptionInfo
     {
-        public string TypeNmae;
+        public string TypeName;
+        public string Type;
         public Sprite BgSprite = null;
 
         public List<FurnitureSet> FurnitureSetList = new List<FurnitureSet>();
-
-        public List<string> FurnitureTempList = new List<string>();
     }
 
     //室内户型的信息
@@ -35,5 +34,6 @@ namespace QFramework.Example
     {
         public string Name;
         public Sprite Bg = null;
+        public string AssetName;
     }
 }

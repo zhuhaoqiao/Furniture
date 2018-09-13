@@ -34,12 +34,7 @@ namespace QFramework.Example
             ToDoorBtn.onClick.AddListener(() =>
             {
                 //   Debug.Log("indoor!!!!!!");
-                UIMgr.OpenPanel<UIInDoor>(UILevel.Common, new UIInDoorData()
-                {
-                    UIPos = new Vector3(0.1749878f, -1.272003f, -879.746f) ,
-                    UIScale = new Vector3(0.005f, 0.005f, 0.005f),
-                    UIRotation = new Vector3(0, 3.84f, -33.33f)
-                });
+                UIMgr.OpenPanel<UIInDoor>();
                 CloseSelf();
             });
 
@@ -63,13 +58,6 @@ namespace QFramework.Example
             QUIManager.Instance.SetPos(0);
 
             transform.localPosition = new Vector3(0f, 0f, 880f);
-        }
-
-        void Update()
-        {
-            Debug.Log(transform.localPosition);
-
-           
         }
 
         protected override void OnHide()
