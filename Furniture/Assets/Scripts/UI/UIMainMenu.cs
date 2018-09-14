@@ -65,6 +65,11 @@ namespace QFramework.Example
             base.OnHide();
         }
 
+        void Update()
+        {
+            Debug.Log(transform.localPosition + "  " + transform.position);
+        }
+
         protected override void OnClose()
         {
             base.OnClose();

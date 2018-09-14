@@ -27,6 +27,8 @@ namespace QFramework.Example
         public string TyepName;
 
         public List<BtnTemp> ChildBtnsList = new List<BtnTemp>();
+
+        public Dictionary<string, FurnitureInfo> FurnitureInfoDict = new Dictionary<string, FurnitureInfo>();
     }
 
     //按钮的样板
@@ -35,5 +37,12 @@ namespace QFramework.Example
         public string Name;
         public Sprite Bg = null;
         public string AssetName;
+    }
+
+    public class FurnitureInfo
+    {
+        public string name;
+
+        public List<string> infoList = new List<string>();
     }
 }

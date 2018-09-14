@@ -11,17 +11,25 @@ namespace QFramework.Example
 	{
 		public const string NAME = "UIFurnitureLib";
 
+		[SerializeField] public Image SelectPanel;
 		[SerializeField] public RectTransform LibBtns;
-		[SerializeField] public Image LibDrd;
 		[SerializeField] public Button ReturnBtn;
 		[SerializeField] public ScrollRect ConfigScrollView;
+		[SerializeField] public Button TypeBtn_Pre;
+		[SerializeField] public Image InfoPanel;
+		[SerializeField] public ScrollRect InfoScrollView;
+		[SerializeField] public Button BackBtn;
 
 		protected override void ClearUIComponents()
 		{
+			SelectPanel = null;
 			LibBtns = null;
-			LibDrd = null;
 			ReturnBtn = null;
 			ConfigScrollView = null;
+			TypeBtn_Pre = null;
+			InfoPanel = null;
+			InfoScrollView = null;
+			BackBtn = null;
 		}
 
 		private UIFurnitureLibData mPrivateData = null;
