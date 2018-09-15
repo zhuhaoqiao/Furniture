@@ -84,7 +84,7 @@ namespace QFramework.Example
 
         protected override void OnClose()
         {
-            FurnitureLibCtrl.Instance.UnLoad();
+            FurnitureLibCtrl.Instance.HideFurnitrue();
 
             base.OnClose();
         }
