@@ -36,10 +36,10 @@ namespace QFramework.Example
 
         protected override void InitUI(IUIData uiData = null)
         {
-            mConfigBtn_Pre = transform.Find("ConfigBtn_Pre").gameObject;
-            mConfigGrid_Pre = transform.Find("ConfigGrid_Pre").gameObject;
-            mTypeBtn_Pre = transform.Find("TypeBtn_Pre").gameObject;
-            mInfoText_Pre = transform.Find("InfoText_Pre").gameObject;
+            mConfigBtn_Pre = transform.Find("SelectPanel/ConfigBtn_Pre").gameObject;
+            mConfigGrid_Pre = transform.Find("SelectPanel/ConfigGrid_Pre").gameObject;
+            mTypeBtn_Pre = transform.Find("SelectPanel/TypeBtn_Pre").gameObject;
+            mInfoText_Pre = transform.Find("InfoPanel/InfoText_Pre").gameObject;
 
             mData = uiData as UIFurnitureLibData ?? new UIFurnitureLibData();
 
@@ -64,9 +64,9 @@ namespace QFramework.Example
 
             BackBtn.onClick.AddListener(() =>
             {
-                SelectPanel.Show();
                 InfoPanel.Hide();
-                CloseSelf();
+                InitSelectScrollView(mLibOpDict[mTypeNamesList[mCurrentTypeSelect].Name]);
+                SelectPanel.Show();              
             });
         }
 
@@ -210,8 +210,8 @@ namespace QFramework.Example
 
                     mBtnShowBoxList.Add(ConfigBtn_PreObj.transform.Find("SelectBox").gameObject);
 
-                    string setTemp = initLibOptionInfo.FurnitureSetList[i].TyepName;
                     string furnitureNameTemp = initLibOptionInfo.FurnitureSetList[i].ChildBtnsList[j].AssetName;
+                    int setBtnId = i;
                     int btnId = j;
 
                     ConfigBtn_PreObj.GetComponent<Button>().onClick.AddListener(() =>
@@ -223,7 +223,7 @@ namespace QFramework.Example
 
                         SelectPanel.Hide();
                         InfoPanel.Show();
-                        InitInfoScrollView(initLibOptionInfo.FurnitureSetList[i].FurnitureInfoDict[initLibOptionInfo.FurnitureSetList[i].ChildBtnsList[j].AssetName]);
+                        InitInfoScrollView(initLibOptionInfo.FurnitureSetList[setBtnId].FurnitureInfoDict[furnitureNameTemp]);
                     });
                 }
             }
